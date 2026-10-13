@@ -23,7 +23,10 @@ let users = [
 ];
 
 const getAllUsers = (req, res) => {
-  res.status(200).json(users);
+  res.status(200).json({ 
+    users,
+    count: users.length 
+});
 };
 
 const getUserById = (req, res, next) => {
@@ -35,7 +38,7 @@ const getUserById = (req, res, next) => {
     error.statusCode = 404;
     return next(error);
   }
-  res.status(200).json(user);
+  res.status(200).json({ user });
 };
 
 const createUser = (req, res) => {
@@ -73,7 +76,10 @@ const createUser = (req, res) => {
 
   users.push(newUser);
 
-  return res.status(201).json(newUser);
+  return res.status(201).json({
+    message: "User created successfully",
+    user: newUser,
+  });
 };
 
 const updateUser = (req, res) => {
@@ -81,7 +87,7 @@ const updateUser = (req, res) => {
   const userIndex = users.findIndex((user) => user.id === parseInt(id));
 
   if (userIndex === -1) {
-    return res.status(404).json({
+    return res.status(200).json({
       error: "User not found",
     });
   }
@@ -102,7 +108,7 @@ const deleteUser = (req, res) => {
   const userIndex = users.findIndex((user) => user.id === parseInt(id));
 
   if (userIndex === -1) {
-    return res.status(404).json({
+    return res.status(200).json({
       error: "User not found",
     });
   }

@@ -29,7 +29,10 @@ let posts = [
 ];
 
 const getAllPosts = (req, res) => {
-  res.status(200).json(posts);
+  res.status(200).json({
+    posts,
+    count: posts.length,
+  });
 };
 
 const getPostById = (req, res, next) => {
@@ -41,7 +44,7 @@ const getPostById = (req, res, next) => {
     error.statusCode = 404;
     return next(error);
   }
-  res.status(200).json(post);
+  res.status(200).json({ post });
 };
 
 const createPost = (req, res) => {
@@ -72,7 +75,10 @@ const createPost = (req, res) => {
 
   posts.push(newPost);
 
-  return res.status(201).json(newPost);
+  return res.status(201).json({
+    message: "Post created successfully",
+    post: newPost,
+  });
 };
 
 const updatePost = (req, res) => {
@@ -80,7 +86,7 @@ const updatePost = (req, res) => {
   const postIndex = posts.findIndex((post) => post.id === parseInt(id));
 
   if (postIndex === -1) {
-    return res.status(404).json({
+    return res.status(200).json({
       error: "Post not found",
     });
   }
@@ -101,7 +107,7 @@ const deletePost = (req, res) => {
   const postIndex = posts.findIndex((post) => post.id === parseInt(id));
 
   if (postIndex === -1) {
-    return res.status(404).json({
+    return res.status(200).json({
       error: "Post not found",
     });
   }

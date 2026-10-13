@@ -21,12 +21,19 @@ app.use("/api/posts", postsRouter);
 app.use("/api/users", usersRouter);
 
 app.get("/", (req, res) => {
-  res.send("Welcome to my Blog Post API!");
+  res.status(200).json({
+    message: "Blog Post API",
+    endpoints: {
+      posts: "/api/posts",
+      users: "/api/users",
+      health: "/health",
+    },
+  });
 });
 
 app.get("/health", (req, res) => {
   res.json({
-    status: "ok",
+    status: "UP",
     message: "Blog Post API is running",
   });
 });
